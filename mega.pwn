@@ -7,6 +7,7 @@
 #include <zcmd>
 #include <sscanf2>
 #define GOD_SQUAD "YOU ARE NOT PART OF THE GOD SQUAD"
+
 new IsInGod[MAX_PLAYERS];
 
 new skin[MAX_PLAYERS];
@@ -416,6 +417,103 @@ COMMAND:unfreeze(playerid, params[])
 		}
 
 		TogglePlayerControllable(id, 1);
+		return 1;
+	}
+}
+
+COMMAND:fling(playerid, params[])
+{
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params, "i", id))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/fling [id]");
+	    }
+	    if(IsPlayerInAnyVehicle(id))
+	    {
+	        SetVehicleVelocity(GetPlayerVehicleID(id), 5000.0, 0, 0);
+	        return 1;
+	    }
+	}
+	return 1;
+}
+//WARNING!!!
+COMMAND:lift(playerid, params[])
+{
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params, "i", id))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/lift [id]");
+	    }
+	    if(IsPlayerInAnyVehicle(id))
+	    {
+	        SetVehicleVelocity(GetPlayerVehicleID(id), 0, 0, 5000.0);
+	        return 1;
+	    }
+	}
+	return 1;
+}
+//WARNING!!!
+COMMAND:spin(playerid, params[])
+{
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",id))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/spin [id]");
+		}
+		if(IsPlayerInAnyVehicle(id))
+		{
+		    SetVehicleAngularVelocity(GetPlayerVehicleID(id), 0, 0, 5000.0);
+		    return 1;
+		}
+	}
+	return 1;
+}
+
+COMMAND:gravity(playerid, params[])
+{
+	new g;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",g))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/gravity [amount]");
+	    }
+	    SetGravity(g);
+	    return 1;
+	}
+}
+
+COMMAND:grest(playerid)
+{
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+		SetGravity(0.008);
 		return 1;
 	}
 }
