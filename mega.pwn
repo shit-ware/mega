@@ -14,6 +14,14 @@ new slut[MAX_PLAYERS];
 new constSkin[MAX_PLAYERS];
 new isGod[MAX_PLAYERS];
 
+public OnPlayerDisconnect(playerid,reason)
+{
+	IsInGod[playerid] = 0;
+	isGod[playerid] = 0;
+	//security fixes
+	return 1;
+}
+
 COMMAND:jp(playerid, params[])
 {
 	new id;
@@ -66,8 +74,8 @@ COMMAND:god(playerid, params[])
         if(IsInGod[playerid] == 0)
         {
             IsInGod[playerid] = 1;
-            SetPlayerHealth(playerid, 99999999999999999999999999999999999999999);
-        	SendClientMessage(playerid, 0xFFFFFF, "You are now ready to slay minorities. You must die first");
+            SetPlayerHealth(playerid, 999);
+        	SendClientMessage(playerid, 0xFFFFFF, "You are now ready to slay minorities.");
 		}
 		else if(IsInGod[playerid] == 1)
         {
@@ -208,7 +216,7 @@ public OnPlayerUpdate(playerid)
 	    return 1;
 	}
 	
-	if(IsInGod[playerid] == 1) SetPlayerHealth(playerid, 99999999999999);
+	if(IsInGod[playerid] == 1) SetPlayerHealth(playerid, 999);
 	
 	return 1;
 }
@@ -219,6 +227,14 @@ public OnPlayerDeath(playerid, killerid,reason)
 	{
 		slut[playerid] = 0;
 		return 1;
+	}
+	
+	if(IsInGod[playerid] == 1)
+	{
+	    IsInGod[playerid] = 0;
+	    SendClientMessage(playerid, 0xFFFFFF, "God mode disabled.");
+	    return 1;
+	    //added because this breaks it for some reason
 	}
 	return 1;
 }
