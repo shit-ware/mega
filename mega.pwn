@@ -518,4 +518,61 @@ COMMAND:grest(playerid)
 	}
 }
 
+COMMAND:ps(playerid, params[])
+{
+	new url[3072];
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"is[3072]",id,url))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/ps [id] [url to mp3]");
+	    }
+	    StopAudioStreamForPlayer(id);
+	    PlayAudioStreamForPlayer(id, url);
+	    return 1;
+	}
+}
+
+COMMAND:lrad(playerid, params[])
+{
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",id))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/lrad [id]");
+		}
+		StopAudioStreamForPlayer(id);
+		PlayAudioStreamForPlayer(id,"http://3ch.zapto.org/lrad.mp3");
+		return 1;
+	}
+}
+
+COMMAND:stopsound(playerid, params[])
+{
+	new id;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",id))
+	    {
+	    	return SendClientMessage(playerid, 0xFFFFFF, "/stopsound [id]");
+	    }
+	    StopAudioStreamForPlayer(id);
+	    return 1;
+	}
+}
+
 //end annoying commands
