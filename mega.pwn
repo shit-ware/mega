@@ -505,7 +505,7 @@ COMMAND:gravity(playerid, params[])
 	}
 }
 
-COMMAND:grest(playerid)
+COMMAND:greset(playerid)
 {
 	if(!IsPlayerAdmin(playerid))
 	{
@@ -572,6 +572,36 @@ COMMAND:stopsound(playerid, params[])
 	    }
 	    StopAudioStreamForPlayer(id);
 	    return 1;
+	}
+}
+
+COMMAND:tp(playerid, params[])
+{
+	new Float:x, Float:y, Float:z, id, inter, vid;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",id))
+		{
+		    return SendClientMessage(playerid, 0xFFFFFF, "/tp [to id]");
+		}
+		GetPlayerPos(id, x, y, z);
+		inter = GetPlayerInterior(id);
+		if(IsPlayerInAnyVehicle(playerid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+		{
+		    vid = GetPlayerVehicleID(playerid);
+		    SetVehiclePos(vid, x, y, z+1);
+		    LinkVehicleToInterior(vid, inter);
+		}
+		else
+		{
+		    SetPlayerPos(playerid, x, y, z);
+		    SetPlayerInterior(playerid, inter);
+		}
+		return 1;
 	}
 }
 
