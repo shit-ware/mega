@@ -14,6 +14,17 @@ new slut[MAX_PLAYERS];
 new constSkin[MAX_PLAYERS];
 new isGod[MAX_PLAYERS];
 
+public OnFilterScriptInit()
+{
+	print("------------------------------\n");
+	print("MEGA.PWN - THE MEGA FILTERSCIPRT\n");
+	print("\tBy: Eyes on me?\n");
+	print("\tFor updates go to:\n");
+	print("\thttps://github.com/shit-ware/mega");
+	print("------------------------------\n");
+	return 1;
+}
+
 public OnPlayerDisconnect(playerid,reason)
 {
 	IsInGod[playerid] = 0;
