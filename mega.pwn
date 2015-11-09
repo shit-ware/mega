@@ -4,7 +4,7 @@
 
 #include <a_samp>
 #include <zcmd>
-#include <sscanf3>
+#include <sscanf2>
 #define GOD_SQUAD "YOU ARE NOT PART OF THE GOD SQUAD"
 
 new IsInGod[MAX_PLAYERS];
