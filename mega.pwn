@@ -1,11 +1,10 @@
 //MEGA.pwn
 //THE MEGA FILTERSCRIPT
 //Made to bypass script limit
-//TODO: Maybe make "id" global
 
 #include <a_samp>
 #include <zcmd>
-#include <sscanf2>
+#include <sscanf3>
 #define GOD_SQUAD "YOU ARE NOT PART OF THE GOD SQUAD"
 
 new IsInGod[MAX_PLAYERS];
@@ -26,7 +25,7 @@ public OnPlayerDisconnect(playerid,reason)
 COMMAND:jp(playerid, params[])
 {
 	new id;
-	
+
 	if(!IsPlayerAdmin(playerid))
 	{
 	    return SendClientMessage(playerid, 0xFFFFFF, "Not an admin.");
@@ -37,7 +36,7 @@ COMMAND:jp(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/jp [id]");
 		}
-		
+
 		SetPlayerSpecialAction(id,2);
 		return 1;
 	}
@@ -56,12 +55,12 @@ CMD:give(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/give [id]");
 		}
-		
+
 		if(gun>47||gun<1)
 		{
 			return SendClientMessage(playerid, 0xFFFFFF, "IDs: 1-47");
 		}
-		
+
 		GivePlayerWeapon(playerid, gun, 9999);
 		return 1;
 	}
@@ -92,7 +91,7 @@ COMMAND:god(playerid, params[])
 
 COMMAND:rpg(playerid)
 {
-//this command has now been deemed "legacy" 
+//this command has now been deemed "legacy"
 	if(!IsPlayerAdmin(playerid))
 	{
 	    SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
@@ -113,7 +112,7 @@ COMMAND:money(playerid)
 	    SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
 	    return 0;
 	    }
-	    
+
 	    else
 	    {
 	        GivePlayerMoney(playerid, 1000000000);
@@ -141,7 +140,7 @@ COMMAND:heal(playerid)
 COMMAND:kick(playerid, params[])
 {
 	new target;
-	
+
 	if(!IsPlayerAdmin(playerid))
 	{
 	    return SendClientMessage(playerid, 0xFFFFFF, "Not an admin.");
@@ -152,7 +151,7 @@ COMMAND:kick(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/kick [id]");
 		}
-		
+
 		Kick(target);
 		return 1;
 	}
@@ -173,25 +172,25 @@ CMD:kill(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/kill [id] [reason]");
 		}
-		
+
 		if(!IsPlayerConnected(id))
 		{
 		    return SendClientMessage(playerid, 0xFFFFFF, "Player not connected.");
 		}
-		
+
 		SetPlayerHealth(id, 0);
 		//SendClientMessageToAll(0xFFFFFF, reason);
 		format(reason,sizeof(reason),"%s killed %s because: %s", ReturnPlayerName(playerid),ReturnPlayerName(id),real_reason);
 		SendClientMessageToAll(0xFFFFFF,reason);
 		return 1;
 	}
-	
+
 }
 
 ReturnPlayerName(playerid)
 {
 	new name[MAX_PLAYER_NAME];
-	
+
 	GetPlayerName(playerid, name, sizeof(name));
 	return name;
 }
@@ -209,16 +208,16 @@ public OnPlayerUpdate(playerid)
 			return 1;
 	    }
 	}
-	
+
 	if(isGod[playerid] == 1)
 	{
 	    SetVehicleHealth(GetPlayerVehicleID(playerid),999);
 	    RepairVehicle(GetPlayerVehicleID(playerid));
 	    return 1;
 	}
-	
+
 	if(IsInGod[playerid] == 1) SetPlayerHealth(playerid, 999);
-	
+
 	return 1;
 }
 
@@ -229,7 +228,7 @@ public OnPlayerDeath(playerid, killerid,reason)
 		slut[playerid] = 0;
 		return 1;
 	}
-	
+
 	if(IsInGod[playerid] == 1)
 	{
 	    IsInGod[playerid] = 0;
@@ -312,7 +311,7 @@ COMMAND:respawn(playerid)
 COMMAND:setdrunk(playerid, params[])
 {
 	new id;
-	
+
 	if(!IsPlayerAdmin(playerid))
 	{
 	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
@@ -323,7 +322,7 @@ COMMAND:setdrunk(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/setdrunk [id]");
 	    }
-	    
+
 	    ApplyAnimation(id, "PED", "WALK_DRUNK", 4.1, 1, 1, 1, 1, 1, 1);
 	    return 1;
 	}
@@ -396,7 +395,7 @@ COMMAND:freeze(playerid, params[])
 	    {
 	        return SendClientMessage(playerid, 0xFFFFFF, "/freeze [id]");
 		}
-		
+
 		TogglePlayerControllable(id, 0);
 		return 1;
 	}
@@ -606,3 +605,4 @@ COMMAND:tp(playerid, params[])
 }
 
 //end annoying commands
+
