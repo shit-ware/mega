@@ -6,13 +6,19 @@
 #include <zcmd>
 #include <sscanf2>
 #define GOD_SQUAD "YOU ARE NOT PART OF THE GOD SQUAD"
+#define HOLDING(%0) \
+	((newkeys & (%0)) == (%0))
+
+#define RELEASED(%0) \
+	(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
 
 new IsInGod[MAX_PLAYERS];
-
+new bNitro[MAX_PLAYERS];
 new skin[MAX_PLAYERS];
 new slut[MAX_PLAYERS];
 new constSkin[MAX_PLAYERS];
 new isGod[MAX_PLAYERS];
+new bKillFeed;
 
 public OnFilterScriptInit()
 {
@@ -24,6 +30,7 @@ public OnFilterScriptInit()
 	print("------------------------------\n");
 	return 1;
 }
+
 
 public OnPlayerDisconnect(playerid,reason)
 {
@@ -192,7 +199,7 @@ CMD:kill(playerid, params[])
 		SetPlayerHealth(id, 0);
 		//SendClientMessageToAll(0xFFFFFF, reason);
 		format(reason,sizeof(reason),"%s killed %s because: %s", ReturnPlayerName(playerid),ReturnPlayerName(id),real_reason);
-		SendClientMessageToAll(0xFFFFFF,reason);
+		SendClientMessageToAll(0xFF0000,reason);
 		return 1;
 	}
 
@@ -247,6 +254,12 @@ public OnPlayerDeath(playerid, killerid,reason)
 	    return 1;
 	    //added because this breaks it for some reason
 	}
+	if(bKillFeed)
+	{
+		SendDeathMessage(killerid, playerid, reason);
+		return 1;
+	}
+	
 	return 1;
 }
 
@@ -617,3 +630,57 @@ COMMAND:tp(playerid, params[])
 
 //end annoying commands
 
+COMMAND:nitro(playerid)
+{
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(bNitro[playerid]==0)
+	    {
+	        bNitro[playerid]=1;
+	    }
+	    else if(bNitro[playerid]==1)
+	    {
+	        bNitro[playerid] = 0;
+	    }
+	}
+	return 1;
+}
+
+public OnPlayerKeyStateChange( playerid, newkeys, oldkeys )
+{
+	if(bNitro[playerid] == 1)
+	{
+    	if ( HOLDING( KEY_FIRE ) && GetPlayerState( playerid ) == PLAYER_STATE_DRIVER )
+    	{
+    	      AddVehicleComponent( GetPlayerVehicleID( playerid ), 1010 );
+    	}
+
+	    if (  RELEASED( KEY_FIRE ) && GetPlayerState( playerid ) == PLAYER_STATE_DRIVER )
+	    {
+	          RemoveVehicleComponent( GetPlayerVehicleID( playerid ), 1010 );
+	    }
+	}
+    return 1;
+}
+
+COMMAND:killfeed(playerid, params[])
+{
+	new bTemp;
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params, "i", bTemp))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/killfeed [true/false]");
+	    }
+	    bKillFeed = bTemp;
+	}
+	return 1;
+}
