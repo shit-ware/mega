@@ -684,3 +684,23 @@ COMMAND:killfeed(playerid, params[])
 	}
 	return 1;
 }
+
+COMMAND:time(playerid, params[])
+{
+	new time;
+	
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, "Not an admin.");
+	}
+	else
+	{
+	    if(sscanf(params,"i",time))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/time [0-23]");
+	    }
+	    
+	    SetWorldTime(time);
+	}
+	return 1;
+}
