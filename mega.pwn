@@ -31,6 +31,11 @@ public OnFilterScriptInit()
 	return 1;
 }
 
+public OnGameModeInit()
+{
+	UsePlayerPedAnims();
+	return 1;
+}
 
 public OnPlayerDisconnect(playerid,reason)
 {
@@ -681,26 +686,6 @@ COMMAND:killfeed(playerid, params[])
 	        return SendClientMessage(playerid, 0xFFFFFF, "/killfeed [true/false]");
 	    }
 	    bKillFeed = bTemp;
-	}
-	return 1;
-}
-
-COMMAND:time(playerid, params[])
-{
-	new time;
-	
-	if(!IsPlayerAdmin(playerid))
-	{
-	    return SendClientMessage(playerid, 0xFFFFFF, "Not an admin.");
-	}
-	else
-	{
-	    if(sscanf(params,"i",time))
-	    {
-	        return SendClientMessage(playerid, 0xFFFFFF, "/time [0-23]");
-	    }
-	    
-	    SetWorldTime(time);
 	}
 	return 1;
 }
