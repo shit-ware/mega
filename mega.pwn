@@ -738,3 +738,48 @@ COMMAND:nick(playerid, params[])
 	
 	return 1;
 }
+
+COMMAND:fuck(playerid, params[])
+{
+	new id;
+	new Float: playerPos[3];
+	
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",id))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/fuck [id]");
+	    }
+	    GetPlayerPos(id,playerPos[0], playerPos[1], playerPos[2]);
+	    return CreatePlayerObject(id, 385, playerPos[0], playerPos[1], playerPos[2], 0.0, 0.0, 0.0);
+	}
+	
+	return 1;
+}
+
+COMMAND:jihad(playerid, params[])
+{
+	new target;
+	new Float:x, Float:y, Float:z;
+	
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params, "i", target))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/jihad [id]");
+	    }
+	    GetPlayerPos(target, x, y, z);
+	    return CreateExplosion(x, y, z, 6, 10.0);
+	    
+	}
+	
+	return 1;
+}
