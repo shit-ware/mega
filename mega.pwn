@@ -19,6 +19,9 @@ new slut[MAX_PLAYERS];
 new constSkin[MAX_PLAYERS];
 new isGod[MAX_PLAYERS];
 new bKillFeed;
+new stringR[1024];
+new nickName[MAX_PLAYER_NAME];
+new nickAnnounce[1024];
 
 public OnFilterScriptInit()
 {
@@ -141,7 +144,7 @@ COMMAND:money(playerid)
 	        GivePlayerMoney(playerid, 1000000000);
 	        SendClientMessage(playerid, 0xFFFFFF, "u rollin liek a tril niga nao");
 	        return 1;
-	        }
+     	}
 }
 
 COMMAND:heal(playerid)
@@ -157,7 +160,7 @@ COMMAND:heal(playerid)
 	        SetPlayerArmour(playerid, 100);
 	        SendClientMessage(playerid, 0xFFFFFF, "u rolin deep nao sun");
 	        return 1;
-	        }
+     	}
 }
 
 COMMAND:kick(playerid, params[])
@@ -687,5 +690,51 @@ COMMAND:killfeed(playerid, params[])
 	    }
 	    bKillFeed = bTemp;
 	}
+	return 1;
+}
+
+COMMAND:rape(playerid, params[])
+{
+	new victim;
+	
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"i",victim))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/rape [id]");
+	    }
+	    SendClientMessage(playerid, 0xFFFFFF, "Rape successful");
+	    format(stringR, sizeof(stringR), "YOU WERE RAPED BY %s", ReturnPlayerName(playerid),playerid);
+	    GameTextForPlayer(victim, stringR, 3500, 4);
+	    format(stringR, sizeof(stringR), "%s was raped by a pack of wild niggers", ReturnPlayerName(victim), victim);
+	    SendClientMessageToAll(0xCC0000, stringR);
+	    
+	}
+	return 1;
+}
+
+COMMAND:nick(playerid, params[])
+{
+	new id;
+	
+	if(!IsPlayerAdmin(playerid))
+	{
+	    return SendClientMessage(playerid, 0xFFFFFF, GOD_SQUAD);
+	}
+	else
+	{
+	    if(sscanf(params,"is",id,nickName))
+	    {
+	        return SendClientMessage(playerid, 0xFFFFFF, "/nick [id] [new name]");
+	    }
+	    SetPlayerName(id, nickName);
+	    format(nickAnnounce, sizeof(nickAnnounce), "You are now known as %s", ReturnPlayerName(id), id);
+	    SendClientMessage(id, 0xCC0000, nickAnnounce);
+	}
+	
 	return 1;
 }
